@@ -1,44 +1,57 @@
-# Seniors Spring Intensive Deliverable Proposal 
-
-## TODO: copy this file, fill it out, and push it up to your project's repo.
+# Spring Intensive
 
 Dates 3/16-3/25
 
 **My Name:**
+Jamie McCrory
 
 
 **Project Name:** 
+Object Localization
 
 
 **Is your project New or Old?**
+New
 
 
 **Is your project Solo or Team?**
+Solo
 
 
 ## Description
 
-**Write a paragraph summary of the current status of your project, what you hope to achieve during the intensive, how and why**
+I hope to write code using Python/Keras/Deep-Learning to implemenet Object Localization.
+
+Among other resources, I will be reviewing [this repo](https://github.com/lars76/object-localization) in order to tackle this topic.
+
+I hope to gain a stronger grasp of common deep learning libraries and frameworks such as Keras and SciKitLearn and to strengthen my Data Science portfolio.
 
 ## Objective 1: say your objective here, you must have at least three objectives to get credit for the intensive… accomplishing objective should be done by soley you
 
+Implement code that takes in an image and extracts the features from the pixel data.
+
 **Why do you want to meet this objective? How will it improve your project?** 
 
+I want to do this, because it is a necessary step of CNNs and object detection.
+
 **How will you demonstrate completion of your objective?** 
+
+The code will reflect this step / ability.
 
 ## Objective 2: ... say your objective to accomplish here …
 **Why do you want to meet this objective? How will it improve your project?** 
 
-**How will you demonstrate completion of your objective?** 
-
-## Objective 3: ... say your objective to accomplish here …
-**Why do you want to meet this objective? How will it improve your project?** 
+Implement code that draws a bounding box around the image, localizing it within the image.
 
 **How will you demonstrate completion of your objective?** 
+
+Users who fork my repo will be able to input an image and get a prediction as to where a particular class of object is likely to be.
 
 ## Stretch goals (optional):
 
 **What stretch goals do you have for your project?**
+
+None
 
 ## Evaluation
 
