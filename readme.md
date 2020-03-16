@@ -26,7 +26,7 @@ Among other resources, I will be reviewing [this repo](https://github.com/lars76
 
 I hope to gain a stronger grasp of common deep learning libraries and frameworks such as Keras and SciKitLearn and to strengthen my Data Science portfolio.
 
-## Objective 1: say your objective here, you must have at least three objectives to get credit for the intensive… accomplishing objective should be done by soley you
+## Objective 1:
 
 Implement code that takes in an image and extracts the features from the pixel data.
 
@@ -38,10 +38,13 @@ I want to do this, because it is a necessary step of CNNs and object detection.
 
 The code will reflect this step / ability.
 
-## Objective 2: ... say your objective to accomplish here …
-**Why do you want to meet this objective? How will it improve your project?** 
+## Objective 2:
 
 Implement code that draws a bounding box around the image, localizing it within the image.
+
+**Why do you want to meet this objective? How will it improve your project?** 
+
+This is sort of the primary goal for the project.
 
 **How will you demonstrate completion of your objective?** 
 
@@ -79,6 +82,7 @@ None
 
 **Student Name:**                
 > Name / Date
+James McCrory 03/16/2020
 **Make School Advisor Name**
 > TBD
 
