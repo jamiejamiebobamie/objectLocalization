@@ -50,6 +50,18 @@ This is sort of the primary goal for the project.
 
 Users who fork my repo will be able to input an image and get a prediction as to where a particular class of object is likely to be.
 
+## Objective 3:
+
+Launch a basic site on AWS Beanstalk that allows users to upload images from their computer and recieve a prediction.
+
+**Why do you want to meet this objective? How will it improve your project?** 
+
+A more user-friendly interface would allow non-tech people to interact with what I've built.
+
+**How will you demonstrate completion of your objective?** 
+
+The site will be live.
+
 ## Stretch goals (optional):
 
 **What stretch goals do you have for your project?**
