@@ -1,3 +1,4 @@
 /kitti-object-detection
 /model_trained/*
 __pycache__
+*.h5
