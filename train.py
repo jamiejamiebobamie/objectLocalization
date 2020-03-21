@@ -10,6 +10,9 @@ from tensorflow.keras.layers import Conv2D, Reshape
 from tensorflow.keras.utils import Sequence
 from tensorflow.keras.backend import epsilon
 
+import pickle
+
+
 # 0.35, 0.5, 0.75, 1.0
 ALPHA = 1.0
 
@@ -32,20 +35,26 @@ class DataGenerator(Sequence):
     def __init__(self, csv_file):
         self.paths = []
 
+        # the width and height of the majority of the images in the dataset
+        self.dimensions = {'width':1242, 'height':375}
+        image_width = self.dimensions['width']
+        image_height = self.dimensions['height']
+
         with open(csv_file, "r") as file:
             self.coords = np.zeros((sum(1 for line in file), 4))
             file.seek(0)
 
             reader = csv.reader(file, delimiter=",")
             for index, row in enumerate(reader):
-                for i, r in enumerate(row[1:7]):
+                for i, r in enumerate(row[1:5]):
+                    r = float(r)
                     row[i+1] = int(r)
 
-                path, image_height, image_width, x0, y0, x1, y1, _, _ = row
+                path, x0, y0, x1, y1, _ = row
                 self.coords[index, 0] = x0 * IMAGE_SIZE / image_width
                 self.coords[index, 1] = y0 * IMAGE_SIZE / image_height
                 self.coords[index, 2] = (x1 - x0) * IMAGE_SIZE / image_width
-                self.coords[index, 3] = (y1 - y0) * IMAGE_SIZE / image_height 
+                self.coords[index, 3] = (y1 - y0) * IMAGE_SIZE / image_height
 
                 self.paths.append(path)
 
@@ -136,6 +145,8 @@ def main():
                         use_multiprocessing=MULTI_PROCESSING,
                         shuffle=True,
                         verbose=1)
+
+    model.save_weights("model-0.52.h5")
 
 
 
