@@ -91,6 +91,8 @@ class Validation(Callback):
 
         iou = 0
 
+        # comment
+
         length_of_dataset = len(self.generator)
         range_of_dataset = range(length_of_dataset)
         for i in range_of_dataset:
