@@ -89,34 +89,62 @@ class Validation(Callback):
         intersections = 0
         unions = 0
 
-        for i in range(len(self.generator)):
-            batch_images, (gt, class_id) = self.generator[i]
-            print(gt)
-            break
-            pred, pred_class = self.model.predict_on_batch(batch_images)
-            # euclidean distance between the ground truth coords and the pred
-            mse += np.linalg.norm(gt - pred, ord='fro') / pred.shape[0]
+        iou = 0
 
+        range_of_dataset = range(len(self.generator))
+        for i in range_of_dataset:
+            batch_images, (gt, class_id) = self.generator[i]
+
+            pred, pred_class = self.model.predict_on_batch(batch_images)
+            # print(gt[0])
+            # print(pred[0])
+            # break
+
+            # euclidean distance between the ground truth coords
+                # and the predicted coords
+            mse += np.linalg.norm(gt - pred, ord='fro') / pred.shape[0]
+            # print(pred.shape[0] == BATCH_SIZE) # True
+            # 
+            # print()
+            # print(class_id[0])
+            # print(pred_class[0])
+            # break
             pred_class = np.argmax(pred_class, axis=1)
-            accuracy += np.sum(np.argmax(class_id, axis=1) == pred_class)
+            class_id = np.argmax(class_id, axis=1)
+            #
+            # print()
+            # print(class_id[0])
+            # print(pred_class[0])
+
+            # max_value = max(my_list)
+            # max_index = my_list.index(max_value)
+
+            accuracy += np.sum(class_id == pred_class)
 
             pred = np.maximum(pred, 0)
 
-            diff_width = (np.minimum(gt[:,0] + gt[:,2], pred[:,0] + pred[:,2])
-                                            - np.maximum(gt[:,0], pred[:,0]))
-            diff_height = (np.minimum(gt[:,1] + gt[:,3], pred[:,1] + pred[:,3])
-                                            - np.maximum(gt[:,1], pred[:,1]))
-            intersection = (np.maximum(diff_width, 0)
-                                                * np.maximum(diff_height, 0))
+            iou_per_batch = 0
+            for j in range(BATCH_SIZE):
+                iou_per_batch += IoU(gt[j],pred[j])
 
-            area_gt = gt[:,2] * gt[:,3]
-            area_pred = pred[:,2] * pred[:,3]
-            union = np.maximum(area_gt + area_pred - intersection, 0)
+            iou += iou_per_batch / pred.shape[0]
+            #
+            # diff_width = (np.minimum(gt[:,0] + gt[:,2], pred[:,0] + pred[:,2])
+            #                                 - np.maximum(gt[:,0], pred[:,0]))
+            # diff_height = (np.minimum(gt[:,1] + gt[:,3], pred[:,1] + pred[:,3])
+            #                                 - np.maximum(gt[:,1], pred[:,1]))
+            # intersection = (np.maximum(diff_width, 0)
+            #                                     * np.maximum(diff_height, 0))
+            #
+            # area_gt = gt[:,2] * gt[:,3]
+            # area_pred = pred[:,2] * pred[:,3]
+            # union = np.maximum(area_gt + area_pred - intersection, 0)
+            #
+            # intersections += np.sum(intersection * (union > 0))
+            # unions += np.sum(union)
 
-            intersections += np.sum(intersection * (union > 0))
-            unions += np.sum(union)
-
-        iou = np.round(intersections / (unions + epsilon()), 4)
+        iou = np.round(iou / range_of_dataset, 4)
+        # iou = np.round(intersections / (unions + epsilon()), 4)
         logs["val_iou"] = iou
 
         mse = np.round(mse, 4)
@@ -127,7 +155,25 @@ class Validation(Callback):
 
         print(" - val_iou: {} - val_mse: {} - val_acc: {}".format(iou,
                                                                 mse, accuracy))
-
+# from: https://www.pyimagesearch.com/2016/11/07/intersection-over-union-iou-for-object-detection/
+def IoU(boxA, boxB):
+	# determine the (x, y)-coordinates of the intersection rectangle
+	xA = max(boxA[0], boxB[0])
+	yA = max(boxA[1], boxB[1])
+	xB = min(boxA[2], boxB[2])
+	yB = min(boxA[3], boxB[3])
+	# compute the area of intersection rectangle
+	interArea = max(0, xB - xA + 1) * max(0, yB - yA + 1)
+	# compute the area of both the prediction and ground-truth
+	# rectangles
+	boxAArea = (boxA[2] - boxA[0] + 1) * (boxA[3] - boxA[1] + 1)
+	boxBArea = (boxB[2] - boxB[0] + 1) * (boxB[3] - boxB[1] + 1)
+	# compute the intersection over union by taking the intersection
+	# area and dividing it by the sum of prediction + ground-truth
+	# areas - the interesection area
+	iou = interArea / float(boxAArea + boxBArea - interArea)
+	# return the intersection over union value
+	return iou
 
 def create_model(trainable=False):
     model = MobileNetV2(input_shape=(IMAGE_SIZE, IMAGE_SIZE, 3),
