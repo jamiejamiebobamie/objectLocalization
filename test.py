@@ -11,6 +11,8 @@ image_width = 1242
 image_height = 375
 IMAGE_SIZE = 96
 
+class_names_LOOKUP = {0:"Car",1:"Pedestrian"}
+
 def main():
     model = create_model()
     model.load_weights(WEIGHTS_FILE)
@@ -35,8 +37,10 @@ def main():
 
         class_id = np.argmax(class_id, axis=1)
 
+        label = class_names_LOOKUP[class_id[0]]
+
         cv2.rectangle(unscaled, (x0, y0), (x1, y1), (0, 0, 255), 1)
-        cv2.putText(unscaled, "class: {}".format(class_id[0]), (x0, y0), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2, cv2.LINE_AA)
+        cv2.putText(unscaled, "class: {}".format(label), (x0, y0), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2, cv2.LINE_AA)
         cv2.imshow("image", unscaled)
         cv2.waitKey(0)
         cv2.destroyAllWindows()

@@ -68,6 +68,7 @@ class DataGenerator(Sequence):
 
         batch_images = np.zeros((len(batch_paths), IMAGE_SIZE, IMAGE_SIZE, 3),
                                                             dtype=np.float32)
+
         for i, f in enumerate(batch_paths):
             img = Image.open(f)
             img = img.resize((IMAGE_SIZE, IMAGE_SIZE))
@@ -122,8 +123,8 @@ class Validation(Callback):
         print(" - val_iou: {} - val_mse: {} - val_acc: {}".format(iou, mse, accuracy))
 
 def create_model(trainable=False):
-    model = MobileNetV2(input_shape=(IMAGE_SIZE, IMAGE_SIZE, 3),
-                                                include_top=False, alpha=ALPHA)
+
+    model = MobileNetV2(include_top=False, alpha=ALPHA)
 
     # to freeze layers
     for layer in model.layers:
@@ -185,7 +186,7 @@ def main():
     model.fit_generator(generator=train_datagen,
                         epochs=EPOCHS,
                         callbacks=[validation_datagen, checkpoint],
-                                                    #reduce_lr, stop],
+                                                    reduce_lr, stop],
                         workers=THREADS,
                         use_multiprocessing=MULTI_PROCESSING,
                         shuffle=True,
