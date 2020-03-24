@@ -1,100 +1,52 @@
-# Spring Intensive
+# Object Classification and Localization
 
-Dates 3/16-3/25
+This is an implementation of Object Classification and Localization using YOLO and MobileNetV2 transfer learning. The final model is flawed, which could be a result of the dataset used to train the model or the chosen architecture, or it could be a result of code (many possiblities: loss function, scaling the coordinates to the aspect ratio of the scaled images, etc.)
 
-**My Name:**
-Jamie McCrory
+## Getting Started
 
+If you would like to try your hand at making it work.
 
-**Project Name:** 
-Object Localization
+* Clone the repo locally:
+```git clone git@github.com:jamiejamiebobamie/objectLocalization.git```
+* In your terminal, navigate to the main folder of the cloned repo.
+* Install the requirements:
+```pip install -r requirements.txt```.
+* You'll need the Kitti Dataset. Download it [here](https://www.kaggle.com/twaldo/kitti-object-detection/download) .
+* Place the downloaded 'kitti-object-detection' directory in the main project folder.
 
+Your files and folder structure should look like this:
+```
+main project folder
+├── kitti-object-detection          # Downloaded dataset from Kaggle.
+│   └── kitti_single               
+│       ├── testing
+│       │   └── image_2
+│       └── training
+│           ├── image_2
+│           └── label_2
+└── ...[ folders and files ]...
+```
 
-**Is your project New or Old?**
-New
+## Prediction
+* To make a prediction type:
+```python3 test.py```
+in your terminal and press 'enter'.
 
+### Prerequisites
 
-**Is your project Solo or Team?**
-Solo
+The required packages are listed in the requirements file and are downloaded using the
+```pip install -r requirements.txt``` command in your terminal.
 
+## Authors
 
-## Description
+* **Jamie McCrory**
 
-I hope to write code using Python/Keras/Deep-Learning to implemenet Object Localization.
+## License
 
-Among other resources, I will be reviewing [this repo](https://github.com/lars76/object-localization) in order to tackle this topic.
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-I hope to gain a stronger grasp of common deep learning libraries and frameworks such as Keras and SciKitLearn and to strengthen my Data Science portfolio.
+## Acknowledgments
 
-## Objective 1:
+* [lars76](https://github.com/lars76/object-localization) 's implementation of object-localization
 
-Implement code that takes in an image and extracts the features from the pixel data.
-
-**Why do you want to meet this objective? How will it improve your project?** 
-
-I want to do this, because it is a necessary step of CNNs and object detection.
-
-**How will you demonstrate completion of your objective?** 
-
-The code will reflect this step / ability.
-
-## Objective 2:
-
-Implement code that draws a bounding box around the image, localizing it within the image.
-
-**Why do you want to meet this objective? How will it improve your project?** 
-
-This is sort of the primary goal for the project.
-
-**How will you demonstrate completion of your objective?** 
-
-Users who fork my repo will be able to input an image and get a prediction as to where a particular class of object is likely to be.
-
-## Objective 3:
-
-Launch a basic site on AWS Beanstalk that allows users to upload images from their computer and recieve a prediction.
-
-**Why do you want to meet this objective? How will it improve your project?** 
-
-A more user-friendly interface would allow non-tech people to interact with what I've built.
-
-**How will you demonstrate completion of your objective?** 
-
-The site will be live.
-
-## Stretch goals (optional):
-
-**What stretch goals do you have for your project?**
-
-None
-
-## Evaluation
-
-**You must meet the following criteria in order to pass the intensive:**
-
-- Students must get proposal approved before starting the project to pass
-- SOLO
-    - Must score an average above a 3 on the [rubric]
-- TEAM
-    - Must score an average above 3 on the [rubric]
-    - Each individual completes 2 of the 3 objectives from their proposal
-- Pitch your product
-
-
-[rubric]:https://docs.google.com/document/d/1IOQDmohLBEBT-hyr-2vgw1mbZUNsq3fHxVfH0oRmVt0/edit
-
-
-
-## Approval Checklist
-- [ ] If I have a team project, I wrote this proposal to represent my work and only my work
-- [ ] I have completed all the necessary parts of this proposal
-- [ ] I linked my proposal in the Spring Intensive Tracker
-
-### Sign off
-
-**Student Name:**                
-> Name / Date
-James McCrory 03/16/2020
-**Make School Advisor Name**
-> TBD
-
+![alt text](./results_images/000000.png)

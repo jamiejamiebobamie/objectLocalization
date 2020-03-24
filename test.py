@@ -3,7 +3,6 @@ import cv2
 import numpy as np
 
 from train import create_model, IMAGE_SIZE
-# from keras.applications.mobilenetv2 import preprocess_input
 
 WEIGHTS_FILE = "model-0.03.h5"
 test_IMAGES = "/Users/jamesmccrory/faster_r-cnn/my_implementation/kitti-object-detection/kitti_single/testing/image_2/*"
