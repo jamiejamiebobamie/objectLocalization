@@ -6,10 +6,14 @@ from train import create_model, IMAGE_SIZE
 # from keras.applications.mobilenetv2 import preprocess_input
 
 WEIGHTS_FILE = "model-0.03.h5"
-IMAGES = "/Users/jamesmccrory/faster_r-cnn/my_implementation/kitti-object-detection/kitti_single/testing/image_2/*"
+test_IMAGES = "/Users/jamesmccrory/faster_r-cnn/my_implementation/kitti-object-detection/kitti_single/testing/image_2/*"
+train_IMAGES = "/Users/jamesmccrory/faster_r-cnn/my_implementation/kitti-object-detection/kitti_single/training/image_2/*"
+sample_image = "/Users/jamesmccrory/faster_r-cnn/my_implementation/kitti-object-detection/kitti_single/training/image_2/000000.png"
 image_width = 1242
 image_height = 375
 IMAGE_SIZE = 96
+
+write_to_filename = "/Users/jamesmccrory/objectLocalization/example.png"
 
 class_names_LOOKUP = {0:"Car",1:"Pedestrian"}
 
@@ -17,14 +21,12 @@ def main():
     model = create_model()
     model.load_weights(WEIGHTS_FILE)
 
-    for filename in glob.glob(IMAGES):
-        unscaled = cv2.imread(filename)
-        # image_height, image_width, _ = unscaled.shape
+    sorted_files_iterator = sorted(glob.glob(train_IMAGES))
 
-        # print(unscaled, IMAGE_SIZE)
+    for filename in sorted_files_iterator:
+        unscaled = cv2.imread(filename)
 
         image = cv2.resize(unscaled, (IMAGE_SIZE, IMAGE_SIZE))
-        # feat_scaled = preprocess_input(np.array(image, dtype=np.float32))
 
         region, class_id = model.predict(x=np.array([image]))
         region = region[0]
@@ -40,9 +42,11 @@ def main():
         label = class_names_LOOKUP[class_id[0]]
 
         cv2.rectangle(unscaled, (x0, y0), (x1, y1), (0, 0, 255), 1)
-        cv2.putText(unscaled, "class: {}".format(label), (x0, y0), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2, cv2.LINE_AA)
+        cv2.putText(unscaled, "class: {}".format(label), (x0, y0),
+                cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2, cv2.LINE_AA)
         cv2.imshow("image", unscaled)
-        cv2.waitKey(0)
+
+        cv2.waitKey(1000)
         cv2.destroyAllWindows()
 
 if __name__ == "__main__":

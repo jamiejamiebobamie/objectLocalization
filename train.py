@@ -100,9 +100,12 @@ class Validation(Callback):
 
             pred = np.maximum(pred, 0)
 
-            diff_width = np.minimum(gt[:,0] + gt[:,2], pred[:,0] + pred[:,2]) - np.maximum(gt[:,0], pred[:,0])
-            diff_height = np.minimum(gt[:,1] + gt[:,3], pred[:,1] + pred[:,3]) - np.maximum(gt[:,1], pred[:,1])
-            intersection = np.maximum(diff_width, 0) * np.maximum(diff_height, 0)
+            diff_width = (np.minimum(gt[:,0] + gt[:,2], pred[:,0] + pred[:,2])
+                                            - np.maximum(gt[:,0], pred[:,0]))
+            diff_height = (np.minimum(gt[:,1] + gt[:,3], pred[:,1] + pred[:,3])
+                                            - np.maximum(gt[:,1], pred[:,1]))
+            intersection = (np.maximum(diff_width, 0)
+                                                * np.maximum(diff_height, 0))
 
             area_gt = gt[:,2] * gt[:,3]
             area_pred = pred[:,2] * pred[:,3]
@@ -120,7 +123,8 @@ class Validation(Callback):
         accuracy = np.round(accuracy / len(self.generator.coords), 4)
         logs["val_acc"] = accuracy
 
-        print(" - val_iou: {} - val_mse: {} - val_acc: {}".format(iou, mse, accuracy))
+        print(" - val_iou: {} - val_mse: {} - val_acc: {}".format(iou,
+                                                                mse, accuracy))
 
 def create_model(trainable=False):
 
@@ -185,7 +189,7 @@ def main():
 
     model.fit_generator(generator=train_datagen,
                         epochs=EPOCHS,
-                        callbacks=[validation_datagen, checkpoint],
+                        callbacks=[validation_datagen, checkpoint,
                                                     reduce_lr, stop],
                         workers=THREADS,
                         use_multiprocessing=MULTI_PROCESSING,
