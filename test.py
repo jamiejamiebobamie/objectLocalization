@@ -3,10 +3,13 @@ import cv2
 import numpy as np
 
 from train import create_model, IMAGE_SIZE
-from keras.applications.mobilenetv2 import preprocess_input
+# from keras.applications.mobilenetv2 import preprocess_input
 
-WEIGHTS_FILE = "model-0.29.h5"
-IMAGES = "images/*jpg"
+WEIGHTS_FILE = "model-0.03.h5"
+IMAGES = "/Users/jamesmccrory/faster_r-cnn/my_implementation/kitti-object-detection/kitti_single/testing/image_2/*"
+image_width = 1242
+image_height = 375
+IMAGE_SIZE = 96
 
 def main():
     model = create_model()
@@ -14,10 +17,12 @@ def main():
 
     for filename in glob.glob(IMAGES):
         unscaled = cv2.imread(filename)
-        image_height, image_width, _ = unscaled.shape
+        # image_height, image_width, _ = unscaled.shape
+
+        # print(unscaled, IMAGE_SIZE)
 
         image = cv2.resize(unscaled, (IMAGE_SIZE, IMAGE_SIZE))
-        feat_scaled = preprocess_input(np.array(image, dtype=np.float32))
+        # feat_scaled = preprocess_input(np.array(image, dtype=np.float32))
 
         region, class_id = model.predict(x=np.array([image]))
         region = region[0]
