@@ -81,7 +81,7 @@ py4j==0.10.7
 pyasn1==0.4.7
 pycodestyle==2.5.0
 pydocstyle==4.0.1
-Pygments==2.4.2
+Pygments==2.7.4
 pymongo==3.9.0
 pyparsing==2.3.0
 pyrsistent==0.15.4
